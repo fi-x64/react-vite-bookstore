@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client'
 import {
   createBrowserRouter, RouterProvider
 } from "react-router-dom";
-import Layout from "./layout"
+import "styles/global.scss"
+import Layout from "@/layout"
+import BookPage from 'pages/client/book';
+import AboutPage from 'pages/client/about';
 
 const router = createBrowserRouter([
   {
@@ -12,11 +15,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/book",
-        element: <div>book page</div>,
+        element: <BookPage />,
       },
       {
-        path: "/about",
-        element: <div>about page</div>,
+      path: "/",
+        element: <AboutPage />,
       },
     ]
   },
