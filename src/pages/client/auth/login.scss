@@ -1,0 +1,59 @@
+.register-container {
+    max-width    : 400px;
+    margin       : auto;
+    padding      : 30px;
+    background   : #fff;
+    border-radius: 8px;
+    box-shadow   : 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align   : center;
+}
+
+.register-title {
+    font-size    : 24px;
+    font-weight  : bold;
+    margin-bottom: 20px;
+}
+
+.register-form {
+    text-align: left;
+}
+
+.ant-form-item-label>label {
+    font-weight: 500;
+}
+
+.register-form .ant-input {
+    height       : 40px;
+    border-radius: 6px;
+}
+
+.register-form .ant-input-password {
+    height       : 40px;
+    border-radius: 6px;
+}
+
+.register-form .ant-btn-primary {
+    height          : 40px;
+    border-radius   : 6px;
+    background-color: #1677ff;
+    border          : none;
+    font-size       : 16px;
+}
+
+.register-form .ant-btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.register-text {
+    display   : block;
+    margin-top: 15px;
+}
+
+.register-text a {
+    color      : #1677ff;
+    font-weight: 500;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
