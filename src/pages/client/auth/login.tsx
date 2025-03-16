@@ -48,7 +48,7 @@ function LoginPage() {
   return (
     <div className="register-container">
       <Title level={2} className="register-title">
-        Đăng Ký Tài Khoản
+        Đăng Nhập Tài Khoản
       </Title>
       <Form layout="vertical" onFinish={onFinish} className="register-form">
         <Form.Item<FieldType>
