@@ -5,57 +5,8 @@ import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
 import { Button } from "antd";
 import { useRef, useState } from "react";
-
-const columns: ProColumns<IUserTable>[] = [
-  {
-    dataIndex: "index",
-    valueType: "indexBorder",
-    width: 48,
-  },
-  {
-    title: "_id",
-    dataIndex: "_id",
-    hideInSearch: true,
-    render(doc, entity) {
-      return <a href="#">{entity._id}</a>;
-    },
-  },
-  {
-    title: "Full Name",
-    dataIndex: "fullName",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    copyable: true,
-  },
-  {
-    title: "Created At",
-    dataIndex: "createdAt",
-    valueType: "date",
-    sorter: true,
-    hideInSearch: true,
-  },
-  {
-    title: "Created At",
-    dataIndex: "createdAtRange",
-    valueType: "dateRange",
-    hideInTable: true,
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    hideInSearch: true,
-    render: (_, record) => (
-      <>
-        <Button type="link">✏️</Button>
-        <Button type="link" danger>
-          🗑
-        </Button>
-      </>
-    ),
-  },
-];
+import DetailUser from "./detail.user";
+import CreateUser from "./create.user";
 
 type TSearch = {
   fullName: string;
@@ -72,6 +23,76 @@ const TableUser = () => {
     pages: 0,
     total: 0,
   });
+
+  const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
+  const [dataViewDetail, setDataViewDetail] = useState<IUserTable | null>(null);
+
+  const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+
+  const columns: ProColumns<IUserTable>[] = [
+    {
+      dataIndex: "index",
+      valueType: "indexBorder",
+      width: 48,
+    },
+    {
+      title: "_id",
+      dataIndex: "_id",
+      hideInSearch: true,
+      render(doc, entity) {
+        return (
+          <a
+            onClick={() => {
+              setDataViewDetail(entity);
+              setOpenViewDetail(true);
+            }}
+            href="#"
+          >
+            {entity._id}
+          </a>
+        );
+      },
+    },
+    {
+      title: "Full Name",
+      dataIndex: "fullName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      copyable: true,
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      valueType: "date",
+      sorter: true,
+      hideInSearch: true,
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAtRange",
+      valueType: "dateRange",
+      hideInTable: true,
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      hideInSearch: true,
+      render: (_, record) => (
+        <>
+          <Button type="link">✏️</Button>
+          <Button type="link" danger>
+            🗑
+          </Button>
+        </>
+      ),
+    },
+  ];
+
+  const refreshTable = () => {
+    actionRef.current?.reload();
+  };
 
   return (
     <>
@@ -95,6 +116,9 @@ const TableUser = () => {
             if (createDateRange) {
               query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`;
             }
+
+            // default
+            query += `&sort=-createdAt`;
 
             if (sort && sort.createdAt) {
               query += `&sort=${
@@ -134,13 +158,25 @@ const TableUser = () => {
             key="button"
             icon={<PlusOutlined />}
             onClick={() => {
-              actionRef.current?.reload();
+              setOpenModalCreate(true);
             }}
             type="primary"
           >
             Add new
           </Button>,
         ]}
+      />
+      <DetailUser
+        openViewDetail={openViewDetail}
+        setOpenViewDetail={setOpenViewDetail}
+        dataViewDetail={dataViewDetail}
+        setDataViewDetail={setDataViewDetail}
+      />
+
+      <CreateUser
+        openModalCreate={openModalCreate}
+        setOpenModalCreate={setOpenModalCreate}
+        refreshTable={refreshTable}
       />
     </>
   );

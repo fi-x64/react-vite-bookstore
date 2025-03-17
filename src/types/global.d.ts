@@ -61,7 +61,7 @@ declare global {
 
   interface IUserTable {
     _id: string;
-    fullname: string;
+    fullName: string;
     email: string;
     phone: string;
     role: string;
